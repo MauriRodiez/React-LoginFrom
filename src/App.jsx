@@ -17,10 +17,55 @@ const onsubmitForm = (e) => {
   //evitar que se recargue la pagina y el valor por defecto
   e.preventDefault();
 
-  //Motramos solo le nombre del usuario con un alert
+  //validar valores
+  const isUsernameValid = validateUserName(userName)
+  const isPasswordValid = validatePassword(password)
+
+  if(!isPasswordValid || !isUsernameValid ){
+    alert("alguno de los datos ingresados no son correctos")
+  } else{
+    //Motramos solo le nombre del usuario con un alert
   alert(`Bienvenido: ${userName}`)
+  }  
 }
 
+  // Funcion para validar ue no tenga espacios en blanco y un minimo de tres caracteres
+  const validateUserName = (userName) => {
+    //eliminar espacios en blanco
+    const withoutSpaces = userName.trim()
+    //validamos la extension
+    if(withoutSpaces.length > 2){
+      return true
+    } else{
+      return false
+    }
+  }
+
+  // Funcion para validar en el password la extension y que haya algun numero
+  const validatePassword = (password) => {
+    //eliminar espacios en blanco
+    const withoutSpaces = password.trim()
+    //separamos el string para recorrerlo y verificar que hay un numero
+    const passwordArray = withoutSpaces.split("")
+    //some retorna true si al menos una de las iteraciones es verdadera
+    const hasNumber = passwordArray.some((character) => {
+      //si el valor es Nan, no es un numero
+      if(isNaN(character)){
+        return false
+      }else{
+        return true
+      }
+    })
+
+  // Validamos la extension y que haya al menos un numero
+  if (withoutSpaces.length > 5 && hasNumber) {
+    return true;
+    } else {
+    return false;
+    }
+
+  }
+  
   return (
     <div className='App'>
       <h3>Iniciar sesión</h3>
